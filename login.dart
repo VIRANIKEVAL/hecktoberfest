@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thesecurityman/components/input_container.dart';
 import 'package:thesecurityman/constants.dart';
 import 'package:thesecurityman/registerDashboard.dart';
-import 'dashboard.dart';
 
 class Login extends StatefulWidget {
 
@@ -83,9 +82,7 @@ class LoginState extends State<Login> {
              if(!RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,15}$").hasMatch(value)){
                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                    content: Text("Please enter password should be 1) One Capital Letter 2) Special Character 3) One Number 4) Length Should be 6-15:"),
-                   duration: Duration(seconds: 2),
-                   backgroundColor: Color(0xFF23408e),
-                   behavior: SnackBarBehavior.fixed
+                   duration: Duration(seconds: 5),
                ));
                return 'Password is too weak';
              }
@@ -114,10 +111,6 @@ class LoginState extends State<Login> {
               borderRadius: BorderRadius.circular(30), color: mainColor),
           padding: EdgeInsets.symmetric(vertical: 20),
           alignment: Alignment.center,
-          child: Text(
-            "Login",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
         ),
       );
 }
@@ -141,21 +134,6 @@ class LoginState extends State<Login> {
         ),
       );
 }
-
-  void signIn(String email,String password) async{
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .then((uid) => {
-      Navigator.pushAndRemoveUntil(context,
-       MaterialPageRoute(builder: (context)=> Dashboard(identity: identity,username: email,)),
-          (route)=> false),
-      Fluttertoast.showToast(msg: "Login Successful"),
-
-    },).catchError((e){
-          Fluttertoast.showToast(msg: e.toString());
-        }
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
